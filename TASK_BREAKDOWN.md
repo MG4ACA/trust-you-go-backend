@@ -104,40 +104,50 @@ Each model implements:
 
 ---
 
-## 📋 Phase 5: Services Layer
+## ✅ Phase 5: Services Layer (Completed)
 
 ### Task 5.1: Authentication Services
 
-- [ ] Create `src/services/passwordService.js`
-  - [ ] Hash password with bcrypt
-  - [ ] Compare password
-  - [ ] Generate random password
+- [x] Create `src/services/passwordService.js`
+  - [x] Hash password with bcrypt
+  - [x] Compare password
+  - [x] Generate random password
+  - [x] Validate password strength
 
 ### Task 5.2: Token Services
 
-- [ ] Create `src/services/tokenService.js`
-  - [ ] Generate JWT token
-  - [ ] Verify JWT token
-  - [ ] Decode token
+- [x] Create `src/services/tokenService.js`
+  - [x] Generate JWT token
+  - [x] Verify JWT token
+  - [x] Decode token
+  - [x] Generate admin/traveler specific tokens
 
 ### Task 5.3: Email Services
 
-- [ ] Create `src/services/emailService.js`
-  - [ ] Send booking confirmation email
-  - [ ] Send account activation email (with password)
-  - [ ] Send password changed email
-  - [ ] Test email connection
+- [x] Create `src/services/emailService.js`
+  - [x] Send booking confirmation email
+  - [x] Send password change confirmation email
+  - [x] Send package request acknowledgment email
+  - [x] Test email connection
 
 ### Task 5.4: File Services
 
-- [ ] Create `src/services/fileService.js`
-  - [ ] Delete file
-  - [ ] Delete directory
-  - [ ] Get file size
-  - [ ] Convert file path to URL
-  - [ ] Placeholder for thumbnail generation (future)
+- [x] Create `src/services/fileService.js`
+  - [x] Delete file and directory
+  - [x] Get file size and check existence
+  - [x] File path/URL conversion
+  - [x] Generate unique filename
+  - [x] Validate file type and size
+  - [x] Placeholder for thumbnail generation (future)
 
-**Estimated Time:** 4-5 hours
+### Task 5.5: Upload Middleware
+
+- [x] Create `src/middleware/upload.js`
+  - [x] Multer configuration for location images
+  - [x] File type validation
+  - [x] File size limits
+
+**Completed:** ✅
 
 ---
 

@@ -5,7 +5,7 @@ const path = require('path');
 
 const migrate = async () => {
   let connection;
-  
+
   try {
     // Connect to MySQL database
     connection = await mysql.createConnection({
@@ -14,7 +14,7 @@ const migrate = async () => {
       user: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'trust_you_go',
-      multipleStatements: true
+      multipleStatements: true,
     });
 
     console.log('✓ Connected to database');
@@ -43,7 +43,7 @@ const migrate = async () => {
 
     await connection.end();
     console.log('\n✓ Migration completed');
-    
+
     process.exit(0);
   } catch (error) {
     console.error('\n✗ Migration failed:', error.message);

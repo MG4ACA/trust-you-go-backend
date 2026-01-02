@@ -10,7 +10,7 @@ const startServer = async () => {
   try {
     // Test database connection
     const dbConnected = await testConnection();
-    
+
     if (!dbConnected) {
       console.error('✗ Failed to connect to database. Server not started.');
       process.exit(1);
@@ -33,7 +33,7 @@ const startServer = async () => {
     // Graceful shutdown
     const shutdown = async () => {
       console.log('\n⏳ Shutting down gracefully...');
-      
+
       server.close(async () => {
         console.log('✓ HTTP server closed');
         await closePool();
@@ -51,7 +51,6 @@ const startServer = async () => {
     // Handle shutdown signals
     process.on('SIGTERM', shutdown);
     process.on('SIGINT', shutdown);
-
   } catch (error) {
     console.error('✗ Failed to start server:', error);
     process.exit(1);

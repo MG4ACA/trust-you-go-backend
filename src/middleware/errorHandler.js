@@ -10,7 +10,7 @@ const errorHandler = (err, req, res, next) => {
   if (err.name === 'ValidationError') {
     statusCode = 400;
     message = 'Validation Error';
-    errors = Object.values(err.errors).map(e => e.message);
+    errors = Object.values(err.errors).map((e) => e.message);
   }
 
   // JWT errors
@@ -52,7 +52,7 @@ const errorHandler = (err, req, res, next) => {
     success: false,
     message,
     ...(errors && { errors }),
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 };
 

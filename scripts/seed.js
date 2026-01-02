@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 
 const seed = async () => {
   let connection;
-  
+
   try {
     // Connect to MySQL database
     connection = await mysql.createConnection({
@@ -15,7 +15,7 @@ const seed = async () => {
       user: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'trust_you_go',
-      multipleStatements: true
+      multipleStatements: true,
     });
 
     console.log('✓ Connected to database');
@@ -23,7 +23,7 @@ const seed = async () => {
     // Generate password hash for default admin
     const defaultPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'Admin@2026';
     const passwordHash = await bcrypt.hash(defaultPassword, 10);
-    
+
     console.log('✓ Password hash generated');
 
     // Read seed file
@@ -56,7 +56,7 @@ const seed = async () => {
 
     await connection.end();
     console.log('✓ Seeding completed');
-    
+
     process.exit(0);
   } catch (error) {
     console.error('\n✗ Seeding failed:', error.message);

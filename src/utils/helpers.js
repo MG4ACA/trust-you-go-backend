@@ -15,20 +15,23 @@ const generateRandomPassword = (length = 12) => {
   const lowercase = 'abcdefghijklmnopqrstuvwxyz';
   const numbers = '0123456789';
   const symbols = '!@#$%^&*';
-  
+
   const allChars = uppercase + lowercase + numbers + symbols;
-  
+
   let password = '';
   password += uppercase[Math.floor(Math.random() * uppercase.length)];
   password += lowercase[Math.floor(Math.random() * lowercase.length)];
   password += numbers[Math.floor(Math.random() * numbers.length)];
   password += symbols[Math.floor(Math.random() * symbols.length)];
-  
+
   for (let i = 4; i < length; i++) {
     password += allChars[Math.floor(Math.random() * allChars.length)];
   }
-  
-  return password.split('').sort(() => Math.random() - 0.5).join('');
+
+  return password
+    .split('')
+    .sort(() => Math.random() - 0.5)
+    .join('');
 };
 
 /**
@@ -82,7 +85,7 @@ const buildPagination = (page = 1, limit = 10, total = 0) => {
     limit: itemsPerPage,
     offset,
     total,
-    totalPages: Math.ceil(total / itemsPerPage)
+    totalPages: Math.ceil(total / itemsPerPage),
   };
 };
 
@@ -103,5 +106,5 @@ module.exports = {
   dateDiffInDays,
   sanitizeFileName,
   buildPagination,
-  cleanObject
+  cleanObject,
 };

@@ -261,10 +261,7 @@ class Admin {
 
   // Find by email
   static async findByEmail(email) {
-    const [rows] = await db.query(
-      'SELECT * FROM admins WHERE email = ?',
-      [email]
-    );
+    const [rows] = await db.query('SELECT * FROM admins WHERE email = ?', [email]);
     return rows[0];
   }
 
@@ -272,18 +269,19 @@ class Admin {
   static async create(data) {
     const adminId = uuidv4();
     const passwordHash = await bcrypt.hash(data.password, 10);
-    
+
     await db.query(
       'INSERT INTO admins (admin_id, email, password_hash, name, contact) VALUES (?, ?, ?, ?, ?)',
       [adminId, data.email, passwordHash, data.name, data.contact]
     );
-    
+
     return this.findById(adminId);
   }
 
   // List all admins
   static async findAll(filters = {}) {
-    let query = 'SELECT admin_id, email, name, contact, is_active, created_at FROM admins WHERE 1=1';
+    let query =
+      'SELECT admin_id, email, name, contact, is_active, created_at FROM admins WHERE 1=1';
     const params = [];
 
     if (filters.is_active !== undefined) {
@@ -292,7 +290,7 @@ class Admin {
     }
 
     query += ' ORDER BY created_at DESC';
-    
+
     const [rows] = await db.query(query, params);
     return rows;
   }
@@ -318,28 +316,19 @@ class Admin {
     if (updates.length === 0) return this.findById(adminId);
 
     params.push(adminId);
-    await db.query(
-      `UPDATE admins SET ${updates.join(', ')} WHERE admin_id = ?`,
-      params
-    );
+    await db.query(`UPDATE admins SET ${updates.join(', ')} WHERE admin_id = ?`, params);
 
     return this.findById(adminId);
   }
 
   // Update last login
   static async updateLastLogin(adminId) {
-    await db.query(
-      'UPDATE admins SET last_login = NOW() WHERE admin_id = ?',
-      [adminId]
-    );
+    await db.query('UPDATE admins SET last_login = NOW() WHERE admin_id = ?', [adminId]);
   }
 
   // Soft delete
   static async deactivate(adminId) {
-    await db.query(
-      'UPDATE admins SET is_active = FALSE WHERE admin_id = ?',
-      [adminId]
-    );
+    await db.query('UPDATE admins SET is_active = FALSE WHERE admin_id = ?', [adminId]);
     return { success: true };
   }
 }
@@ -363,7 +352,7 @@ exports.getAllAdmins = async (req, res) => {
   try {
     const { is_active } = req.query;
     const filters = {};
-    
+
     if (is_active !== undefined) {
       filters.is_active = is_active === 'true';
     }
@@ -459,7 +448,7 @@ module.exports = router;
 exports.successResponse = (res, data, statusCode = 200) => {
   return res.status(statusCode).json({
     success: true,
-    data: data
+    data: data,
   });
 };
 
@@ -471,8 +460,8 @@ exports.errorResponse = (res, message, code = 'ERROR', statusCode = 400) => {
     success: false,
     error: {
       message: message,
-      code: code
-    }
+      code: code,
+    },
   });
 };
 
@@ -485,8 +474,8 @@ exports.validationErrorResponse = (res, errors) => {
     error: {
       message: 'Validation failed',
       code: 'VALIDATION_ERROR',
-      details: errors
-    }
+      details: errors,
+    },
   });
 };
 ```
@@ -514,14 +503,14 @@ exports.generateRandomPassword = () => {
   const lowercase = 'abcdefghjkmnpqrstuvwxyz';
   const numbers = '23456789';
   const special = '!@#$%&*';
-  
+
   let password = 'Ty2026!'; // Prefix
-  
+
   // Add 3 random characters
   password += uppercase.charAt(Math.floor(Math.random() * uppercase.length));
   password += lowercase.charAt(Math.floor(Math.random() * lowercase.length));
   password += numbers.charAt(Math.floor(Math.random() * numbers.length));
-  
+
   return password;
 };
 
@@ -591,7 +580,7 @@ const colors = {
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
   magenta: '\x1b[35m',
-  cyan: '\x1b[36m'
+  cyan: '\x1b[36m',
 };
 
 /**
@@ -644,7 +633,7 @@ module.exports = {
   // User roles
   ROLES: {
     ADMIN: 'admin',
-    TRAVELER: 'traveler'
+    TRAVELER: 'traveler',
   },
 
   // Booking status
@@ -653,7 +642,7 @@ module.exports = {
     CONFIRMED: 'confirmed',
     IN_PROGRESS: 'in_progress',
     COMPLETED: 'completed',
-    CANCELLED: 'cancelled'
+    CANCELLED: 'cancelled',
   },
 
   // Payment status
@@ -661,13 +650,13 @@ module.exports = {
     PENDING: 'pending',
     PARTIAL: 'partial',
     PAID: 'paid',
-    REFUNDED: 'refunded'
+    REFUNDED: 'refunded',
   },
 
   // Package status
   PACKAGE_STATUS: {
     DRAFT: 'draft',
-    PUBLISHED: 'published'
+    PUBLISHED: 'published',
   },
 
   // Location types
@@ -675,27 +664,27 @@ module.exports = {
     TOURIST_SPOT: 'tourist_spot',
     ACCOMMODATION: 'accommodation',
     RESTAURANT: 'restaurant',
-    ACTIVITY: 'activity'
+    ACTIVITY: 'activity',
   },
 
   // File upload
   UPLOAD: {
     MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB
     ALLOWED_MIME_TYPES: ['image/jpeg', 'image/png', 'image/webp'],
-    THUMBNAIL_SIZE: 300
+    THUMBNAIL_SIZE: 300,
   },
 
   // JWT
   JWT: {
     EXPIRES_IN: '1h',
-    ALGORITHM: 'HS256'
+    ALGORITHM: 'HS256',
   },
 
   // Email
   EMAIL_TYPES: {
     BOOKING_CONFIRMATION: 'booking_confirmation',
     ACCOUNT_ACTIVATION: 'account_activation',
-    PASSWORD_CHANGED: 'password_changed'
+    PASSWORD_CHANGED: 'password_changed',
   },
 
   // Error codes
@@ -708,8 +697,8 @@ module.exports = {
     SERVER_ERROR: 'SERVER_ERROR',
     INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
     TOKEN_EXPIRED: 'TOKEN_EXPIRED',
-    INACTIVE_ACCOUNT: 'INACTIVE_ACCOUNT'
-  }
+    INACTIVE_ACCOUNT: 'INACTIVE_ACCOUNT',
+  },
 };
 ```
 
@@ -724,34 +713,31 @@ const { body, validationResult } = require('express-validator');
 const { validationErrorResponse } = require('../utils/response');
 
 exports.validateAdmin = [
-  body('email')
-    .isEmail()
-    .withMessage('Invalid email format')
-    .normalizeEmail(),
-  
+  body('email').isEmail().withMessage('Invalid email format').normalizeEmail(),
+
   body('name')
     .trim()
     .isLength({ min: 2, max: 255 })
     .withMessage('Name must be between 2 and 255 characters'),
-  
+
   body('contact')
     .trim()
     .matches(/^\+?[0-9]{10,15}$/)
     .withMessage('Invalid contact number'),
-  
+
   body('password')
     .isLength({ min: 8 })
     .withMessage('Password must be at least 8 characters')
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
     .withMessage('Password must contain uppercase, lowercase, number, and special character'),
-  
+
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return validationErrorResponse(res, errors.array());
     }
     next();
-  }
+  },
 ];
 ```
 
@@ -773,12 +759,7 @@ exports.authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return errorResponse(
-      res,
-      'Access token required',
-      ERROR_CODES.UNAUTHORIZED,
-      401
-    );
+    return errorResponse(res, 'Access token required', ERROR_CODES.UNAUTHORIZED, 401);
   }
 
   const token = authHeader.substring(7); // Remove 'Bearer '
@@ -789,19 +770,9 @@ exports.authenticateJWT = (req, res, next) => {
     next();
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
-      return errorResponse(
-        res,
-        'Token has expired',
-        ERROR_CODES.TOKEN_EXPIRED,
-        401
-      );
+      return errorResponse(res, 'Token has expired', ERROR_CODES.TOKEN_EXPIRED, 401);
     }
-    return errorResponse(
-      res,
-      'Invalid token',
-      ERROR_CODES.UNAUTHORIZED,
-      401
-    );
+    return errorResponse(res, 'Invalid token', ERROR_CODES.UNAUTHORIZED, 401);
   }
 };
 
@@ -810,12 +781,7 @@ exports.authenticateJWT = (req, res, next) => {
  */
 exports.authorizeAdmin = (req, res, next) => {
   if (req.user.role !== 'admin') {
-    return errorResponse(
-      res,
-      'Admin access required',
-      ERROR_CODES.FORBIDDEN,
-      403
-    );
+    return errorResponse(res, 'Admin access required', ERROR_CODES.FORBIDDEN, 403);
   }
   next();
 };
@@ -825,12 +791,7 @@ exports.authorizeAdmin = (req, res, next) => {
  */
 exports.authorizeTraveler = (req, res, next) => {
   if (req.user.role !== 'traveler') {
-    return errorResponse(
-      res,
-      'Traveler access required',
-      ERROR_CODES.FORBIDDEN,
-      403
-    );
+    return errorResponse(res, 'Traveler access required', ERROR_CODES.FORBIDDEN, 403);
   }
   next();
 };
@@ -876,18 +837,18 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const locationId = req.params.id;
     const uploadPath = path.join('uploads', 'locations', locationId);
-    
+
     // Create directory if doesn't exist
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
-    
+
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
     const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
     cb(null, uniqueName);
-  }
+  },
 });
 
 // File filter
@@ -904,8 +865,8 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: UPLOAD.MAX_FILE_SIZE
-  }
+    fileSize: UPLOAD.MAX_FILE_SIZE,
+  },
 });
 
 module.exports = upload;
@@ -985,8 +946,8 @@ const transporter = nodemailer.createTransporter({
   secure: process.env.EMAIL_SECURE === 'true',
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD
-  }
+    pass: process.env.EMAIL_PASSWORD,
+  },
 });
 
 /**
@@ -994,7 +955,7 @@ const transporter = nodemailer.createTransporter({
  */
 exports.sendBookingConfirmation = async (to, data) => {
   const { travelerName, packageTitle, startDate, endDate, bookingId } = data;
-  
+
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #2563eb;">Booking Confirmed!</h2>
@@ -1017,7 +978,7 @@ exports.sendBookingConfirmation = async (to, data) => {
     from: process.env.EMAIL_FROM,
     to: to,
     subject: 'Booking Confirmation - Trust You Go',
-    html: html
+    html: html,
   });
 };
 
@@ -1026,7 +987,7 @@ exports.sendBookingConfirmation = async (to, data) => {
  */
 exports.sendAccountActivation = async (to, data) => {
   const { name, email, password } = data;
-  
+
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #2563eb;">Welcome to Trust You Go!</h2>
@@ -1050,7 +1011,7 @@ exports.sendAccountActivation = async (to, data) => {
     from: process.env.EMAIL_FROM,
     to: to,
     subject: 'Account Activated - Trust You Go',
-    html: html
+    html: html,
   });
 };
 
@@ -1072,7 +1033,7 @@ exports.sendPasswordChanged = async (to, name) => {
     from: process.env.EMAIL_FROM,
     to: to,
     subject: 'Password Changed - Trust You Go',
-    html: html
+    html: html,
   });
 };
 
@@ -1109,16 +1070,17 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 0
+  keepAliveInitialDelay: 0,
 });
 
 // Test connection
-pool.getConnection()
-  .then(connection => {
+pool
+  .getConnection()
+  .then((connection) => {
     logger.success('Database connected successfully');
     connection.release();
   })
-  .catch(error => {
+  .catch((error) => {
     logger.error('Database connection failed', error);
     process.exit(1);
   });
@@ -1177,6 +1139,7 @@ SWAGGER_ENABLED=true
 ## 🎯 Implementation Checklist
 
 ### **Phase 1: Core Setup**
+
 - [ ] Create directory structure
 - [ ] Install all dependencies
 - [ ] Configure database connection
@@ -1185,6 +1148,7 @@ SWAGGER_ENABLED=true
 - [ ] Test database connection
 
 ### **Phase 2: Utilities & Middleware**
+
 - [ ] Implement response formatters
 - [ ] Create helper functions
 - [ ] Set up logger
@@ -1194,6 +1158,7 @@ SWAGGER_ENABLED=true
 - [ ] Create error handler middleware
 
 ### **Phase 3: Models**
+
 - [ ] Admin model
 - [ ] Traveler model
 - [ ] Agent model
@@ -1202,6 +1167,7 @@ SWAGGER_ENABLED=true
 - [ ] Booking model
 
 ### **Phase 4: Controllers & Routes**
+
 - [ ] Authentication controller
 - [ ] Admin management controller
 - [ ] Traveler management controller
@@ -1211,12 +1177,14 @@ SWAGGER_ENABLED=true
 - [ ] Booking management controller
 
 ### **Phase 5: Services**
+
 - [ ] Email service
 - [ ] Password service
 - [ ] File service (thumbnails)
 - [ ] Token service
 
 ### **Phase 6: Validators**
+
 - [ ] Auth validators
 - [ ] Admin validators
 - [ ] Location validators
@@ -1224,6 +1192,7 @@ SWAGGER_ENABLED=true
 - [ ] Booking validators
 
 ### **Phase 7: Documentation & Testing**
+
 - [ ] Swagger configuration
 - [ ] API documentation
 - [ ] Postman collection

@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({
         success: false,
-        message: 'No token provided'
+        message: 'No token provided',
       });
     }
 
@@ -21,7 +21,7 @@ const verifyToken = (req, res, next) => {
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: 'Invalid or expired token'
+      message: 'Invalid or expired token',
     });
   }
 };
@@ -31,7 +31,7 @@ const isAdmin = (req, res, next) => {
   if (!req.user || req.user.role !== 'admin') {
     return res.status(403).json({
       success: false,
-      message: 'Access denied. Admin role required.'
+      message: 'Access denied. Admin role required.',
     });
   }
   next();
@@ -42,7 +42,7 @@ const isTraveler = (req, res, next) => {
   if (!req.user || req.user.role !== 'traveler') {
     return res.status(403).json({
       success: false,
-      message: 'Access denied. Traveler role required.'
+      message: 'Access denied. Traveler role required.',
     });
   }
   next();
@@ -53,7 +53,7 @@ const isAuthenticated = (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       success: false,
-      message: 'Authentication required'
+      message: 'Authentication required',
     });
   }
   next();
@@ -63,5 +63,5 @@ module.exports = {
   verifyToken,
   isAdmin,
   isTraveler,
-  isAuthenticated
+  isAuthenticated,
 };

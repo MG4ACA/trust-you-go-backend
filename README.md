@@ -9,6 +9,7 @@
 RESTful API backend for Trust You Go travel booking management system built with Express.js and MySQL.
 
 ### **Tech Stack**
+
 - **Runtime:** Node.js 18+
 - **Framework:** Express.js 4.x
 - **Database:** MySQL 8.0+
@@ -19,6 +20,7 @@ RESTful API backend for Trust You Go travel booking management system built with
 - **Validation:** express-validator
 
 ### **Key Features**
+
 - ✅ JWT Authentication with 1-hour token expiry
 - ✅ Role-based access control (Admin, Traveler)
 - ✅ Auto traveler account creation on booking
@@ -34,6 +36,7 @@ RESTful API backend for Trust You Go travel booking management system built with
 ## 🚀 Quick Start
 
 ### **Prerequisites**
+
 - Node.js 18+ installed
 - MySQL 8.0+ installed and running
 - Git
@@ -188,6 +191,7 @@ npm run db:reset
 ```
 
 ### **Default Admin Account**
+
 ```
 Email: admin@trustyou-go.com
 Password: Admin@2026
@@ -201,6 +205,7 @@ Contact: +94XXXXXXXXX
 ## 🔐 Authentication
 
 ### **JWT Token System**
+
 - **Token Type:** Bearer token
 - **Expiry:** 1 hour
 - **Algorithm:** HS256
@@ -209,12 +214,14 @@ Contact: +94XXXXXXXXX
 ### **Login Flow**
 
 1. **Admin Login:**
+
    ```
    POST /api/auth/login
    Body: { "email": "admin@trustyou-go.com", "password": "Admin@2026" }
    ```
 
 2. **Traveler Login:**
+
    ```
    POST /api/auth/login
    Body: { "email": "traveler@example.com", "password": "auto-generated-password" }
@@ -237,6 +244,7 @@ Contact: +94XXXXXXXXX
    ```
 
 ### **Protected Routes**
+
 All routes except `/api/auth/login` and public endpoints require JWT token:
 
 ```javascript
@@ -251,117 +259,124 @@ headers: {
 
 ### **Authentication Endpoints**
 
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| POST | `/api/auth/login` | Public | Admin/Traveler login |
-| GET | `/api/auth/me` | Protected | Get current user |
-| PUT | `/api/auth/password` | Protected | Change password |
-| POST | `/api/auth/logout` | Protected | Logout (optional) |
+| Method | Endpoint             | Access    | Description          |
+| ------ | -------------------- | --------- | -------------------- |
+| POST   | `/api/auth/login`    | Public    | Admin/Traveler login |
+| GET    | `/api/auth/me`       | Protected | Get current user     |
+| PUT    | `/api/auth/password` | Protected | Change password      |
+| POST   | `/api/auth/logout`   | Protected | Logout (optional)    |
 
 ---
 
 ### **Public Endpoints (No Auth)**
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/packages` | List active published packages |
-| GET | `/api/packages/:id` | Get package with full itinerary |
-| GET | `/api/locations` | List active locations |
-| GET | `/api/locations/:id` | Get location with images |
-| POST | `/api/bookings` | Submit booking request |
+| Method | Endpoint             | Description                     |
+| ------ | -------------------- | ------------------------------- |
+| GET    | `/api/packages`      | List active published packages  |
+| GET    | `/api/packages/:id`  | Get package with full itinerary |
+| GET    | `/api/locations`     | List active locations           |
+| GET    | `/api/locations/:id` | Get location with images        |
+| POST   | `/api/bookings`      | Submit booking request          |
 
 ---
 
 ### **Admin Endpoints (Auth: Admin)**
 
 #### **Admin Management**
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/admins` | List all admins |
-| GET | `/api/admin/admins/:id` | Get admin by ID |
-| POST | `/api/admin/admins` | Create new admin |
-| PUT | `/api/admin/admins/:id` | Update admin |
+
+| Method | Endpoint                | Description      |
+| ------ | ----------------------- | ---------------- |
+| GET    | `/api/admin/admins`     | List all admins  |
+| GET    | `/api/admin/admins/:id` | Get admin by ID  |
+| POST   | `/api/admin/admins`     | Create new admin |
+| PUT    | `/api/admin/admins/:id` | Update admin     |
 | DELETE | `/api/admin/admins/:id` | Deactivate admin |
 
 #### **Traveler Management**
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/travelers` | List all travelers |
-| GET | `/api/admin/travelers/:id` | Get traveler by ID |
-| PUT | `/api/admin/travelers/:id` | Update traveler |
-| PUT | `/api/admin/travelers/:id/activate` | Activate traveler |
-| DELETE | `/api/admin/travelers/:id` | Delete traveler |
+
+| Method | Endpoint                            | Description        |
+| ------ | ----------------------------------- | ------------------ |
+| GET    | `/api/admin/travelers`              | List all travelers |
+| GET    | `/api/admin/travelers/:id`          | Get traveler by ID |
+| PUT    | `/api/admin/travelers/:id`          | Update traveler    |
+| PUT    | `/api/admin/travelers/:id/activate` | Activate traveler  |
+| DELETE | `/api/admin/travelers/:id`          | Delete traveler    |
 
 #### **Agent Management**
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/agents` | List all agents |
-| GET | `/api/agents/:id` | Get agent by ID |
-| POST | `/api/agents` | Create agent |
-| PUT | `/api/agents/:id` | Update agent |
+
+| Method | Endpoint          | Description      |
+| ------ | ----------------- | ---------------- |
+| GET    | `/api/agents`     | List all agents  |
+| GET    | `/api/agents/:id` | Get agent by ID  |
+| POST   | `/api/agents`     | Create agent     |
+| PUT    | `/api/agents/:id` | Update agent     |
 | DELETE | `/api/agents/:id` | Deactivate agent |
 
 #### **Location Management**
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/locations` | List all locations (incl. inactive) |
-| POST | `/api/locations` | Create location |
-| PUT | `/api/locations/:id` | Update location |
-| DELETE | `/api/locations/:id` | Deactivate location |
-| POST | `/api/locations/:id/images` | Upload image |
-| DELETE | `/api/locations/:id/images/:imageId` | Delete image |
-| PUT | `/api/locations/:id/images/reorder` | Reorder images |
+
+| Method | Endpoint                             | Description                         |
+| ------ | ------------------------------------ | ----------------------------------- |
+| GET    | `/api/admin/locations`               | List all locations (incl. inactive) |
+| POST   | `/api/locations`                     | Create location                     |
+| PUT    | `/api/locations/:id`                 | Update location                     |
+| DELETE | `/api/locations/:id`                 | Deactivate location                 |
+| POST   | `/api/locations/:id/images`          | Upload image                        |
+| DELETE | `/api/locations/:id/images/:imageId` | Delete image                        |
+| PUT    | `/api/locations/:id/images/reorder`  | Reorder images                      |
 
 #### **Package Management**
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/packages` | List all packages (incl. drafts) |
-| POST | `/api/packages` | Create package |
-| PUT | `/api/packages/:id` | Update package |
-| PUT | `/api/packages/:id/publish` | Publish package (draft → published) |
-| PUT | `/api/packages/:id/unpublish` | Unpublish package |
-| DELETE | `/api/packages/:id` | Deactivate package |
-| POST | `/api/packages/:id/duplicate` | Duplicate package |
-| PUT | `/api/packages/:id/itinerary` | Update itinerary |
+
+| Method | Endpoint                      | Description                         |
+| ------ | ----------------------------- | ----------------------------------- |
+| GET    | `/api/admin/packages`         | List all packages (incl. drafts)    |
+| POST   | `/api/packages`               | Create package                      |
+| PUT    | `/api/packages/:id`           | Update package                      |
+| PUT    | `/api/packages/:id/publish`   | Publish package (draft → published) |
+| PUT    | `/api/packages/:id/unpublish` | Unpublish package                   |
+| DELETE | `/api/packages/:id`           | Deactivate package                  |
+| POST   | `/api/packages/:id/duplicate` | Duplicate package                   |
+| PUT    | `/api/packages/:id/itinerary` | Update itinerary                    |
 
 #### **Booking Management**
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/bookings` | List all bookings (with filters) |
-| GET | `/api/bookings/:id` | Get booking details |
-| PUT | `/api/bookings/:id/confirm` | Confirm booking + activate traveler |
-| PUT | `/api/bookings/:id/cancel` | Cancel booking |
-| PUT | `/api/bookings/:id/status` | Update booking status |
-| PUT | `/api/bookings/:id` | Update booking details |
+
+| Method | Endpoint                    | Description                         |
+| ------ | --------------------------- | ----------------------------------- |
+| GET    | `/api/admin/bookings`       | List all bookings (with filters)    |
+| GET    | `/api/bookings/:id`         | Get booking details                 |
+| PUT    | `/api/bookings/:id/confirm` | Confirm booking + activate traveler |
+| PUT    | `/api/bookings/:id/cancel`  | Cancel booking                      |
+| PUT    | `/api/bookings/:id/status`  | Update booking status               |
+| PUT    | `/api/bookings/:id`         | Update booking details              |
 
 ---
 
 ### **Traveler Endpoints (Auth: Traveler)**
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/traveler/profile` | Get my profile |
-| PUT | `/api/traveler/profile`-requests` | Request custom package |
-| GET | `/api/traveler/package-requests` | Get my package requests |
-| GET | `/api/traveler/package-requests/:id` | Get request details |
+| Method | Endpoint                             | Description             |
+| ------ | ------------------------------------ | ----------------------- |
+| GET    | `/api/traveler/profile`              | Get my profile          |
+| PUT    | `/api/traveler/profile`-requests`    | Request custom package  |
+| GET    | `/api/traveler/package-requests`     | Get my package requests |
+| GET    | `/api/traveler/package-requests/:id` | Get request details     |
 
 ### **Admin - Package Request Management**
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/package-requests` | List all requests (with filters) |
-| GET | `/api/admin/package-requests/:id` | Get request details |
-| PUT | `/api/admin/package-requests/:id/status` | Update request status |
-| POST | `/api/admin/package-requests/:id/create-package` | Create package from request
-| GET | `/api/traveler/bookings` | Get my bookings |
-| GET | `/api/traveler/bookings/:id` | Get my booking details |
-| POST | `/api/traveler/packages/request` | Request custom package |
+| Method | Endpoint                                         | Description                      |
+| ------ | ------------------------------------------------ | -------------------------------- |
+| GET    | `/api/admin/package-requests`                    | List all requests (with filters) |
+| GET    | `/api/admin/package-requests/:id`                | Get request details              |
+| PUT    | `/api/admin/package-requests/:id/status`         | Update request status            |
+| POST   | `/api/admin/package-requests/:id/create-package` | Create package from request      |
+| GET    | `/api/traveler/bookings`                         | Get my bookings                  |
+| GET    | `/api/traveler/bookings/:id`                     | Get my booking details           |
+| POST   | `/api/traveler/packages/request`                 | Request custom package           |
 
 ---
 
 ## 📥 Request/Response Format
 
 ### **Success Response**
+
 ```json
 {
   "success": true,
@@ -373,6 +388,7 @@ headers: {
 ```
 
 ### **Error Response**
+
 ```json
 {
   "success": false,
@@ -384,6 +400,7 @@ headers: {
 ```
 
 ### **Validation Error**
+
 ```json
 {
   "success": false,
@@ -410,15 +427,19 @@ headers: {
 
 **Headers:**
 ``Storage path: `uploads/locations/{location_id}/`
+
 - Returns image URL
 
 **Note:** Thumbnail generation feature will be implemented in future updates.
+
 ```
 
 **Body:**
 ```
+
 image: <file> (JPEG, PNG, WebP)
 displayOrder: <number> (optional)
+
 ```
 
 **Features:**
@@ -431,6 +452,7 @@ displayOrder: <number> (optional)
 
 **Note:** `thumbnail_url` will be null until thumbnail generation is implemented.
 **Response:**
+
 ```json
 {
   "success": true,
@@ -452,11 +474,13 @@ displayOrder: <number> (optional)
 Emails are sent via Nodemailer using Hostinger SMTP:
 
 **Templates:**
+
 1. **Booking Confirmation** - Sent when admin confirms booking
 2. **Traveler Account Activation** - Sent with auto-generated password
 3. **Password Changed** - Sent when user changes password
 
 **Configuration in .env:**
+
 ```env
 EMAIL_HOST=info@trustyou-go.com
 EMAIL_PASSWORD=your_hostinger_email_password
@@ -488,6 +512,7 @@ Body: {
 ```
 
 **Backend Actions:**
+
 1. Validate package exists and is active
 2. Create traveler account with:
    - Auto-generated password (e.g., `Ty2026!xY7p`)
@@ -510,6 +535,7 @@ Body: {
 ```
 
 **Backend Actions:**
+
 1. Update booking:
    - `status = 'confirmed'`
    - `confirmation_date = NOW()`
@@ -535,6 +561,7 @@ Body: {
 ```
 
 Traveler can:
+
 - View booking details
 - Update profile
 - Change password
@@ -547,21 +574,25 @@ Traveler can:
 ### **Draft → Published → Inactive**
 
 **Draft Status:**
+
 - Created by admin but not visible to public
 - Can be edited freely
 - Not bookable by travelers
 
 **Published Status:**
+
 - Visible to public on frontend
 - Bookable by travelers
 - Shows on package listing
 
 **Inactive Status:**
+
 - Soft deleted (is_active = false)
 - Not visible to public
 - Existing bookings preserved
 
 **Endpoints:**
+
 ```
 PUT /api/packages/:id/publish    # Draft → Published
 PUT /api/packages/:id/unpublish  # Published → Draft
@@ -573,6 +604,7 @@ DELETE /api/packages/:id         # Any → Inactive
 ## 🧪 Testing
 
 ### **Run Tests**
+
 ```bash
 npm test                  # Run all tests
 npm run test:unit        # Unit tests only
@@ -581,6 +613,7 @@ npm run test:coverage    # Coverage report
 ```
 
 ### **API Testing Tools**
+
 - **Swagger UI:** `http://localhost:3000/api-docs`
 - **Postman Collection:** Import `postman_collection.json`
 - **Thunder Client:** VS Code extension
@@ -594,6 +627,7 @@ See [TESTING.md](./TESTING.md) for comprehensive test scenarios.
 ## 📊 Database Queries Optimization
 
 ### **Indexes Created**
+
 - Email lookups (admins, travelers, agents)
 - Status filters (all tables with is_active)
 - Foreign key relationships
@@ -601,6 +635,7 @@ See [TESTING.md](./TESTING.md) for comprehensive test scenarios.
 - Location type filtering
 
 ### **N+1 Query Prevention**
+
 - Package with locations uses JOINs
 - Booking with package/agent/traveler uses JOINs
 - Location with images uses JOINs
@@ -610,21 +645,25 @@ See [TESTING.md](./TESTING.md) for comprehensive test scenarios.
 ## 🚀 Deployment
 
 ### **Development**
+
 ```bash
 npm run dev    # Runs with nodemon (auto-restart)
 ```
 
 ### **Production**
+
 ```bash
 npm start      # Runs with node
 ```
 
 ### **Environment**
+
 - Copy `.env.example` to `.env`
 - Update all configuration values
 - Never commit `.env` to Git
 
 ### **Database Migration**
+
 ```bash
 # Production database setup
 npm run db:migrate:prod
@@ -667,12 +706,15 @@ npm run db:migrate:prod
 ## 📚 API Documentation
 
 ### **Swagger UI**
+
 Once server is running, visit:
+
 ```
 http://localhost:3000/api-docs
 ```
 
 Interactive API documentation with:
+
 - All endpoints listed
 - Request/response schemas
 - Try-it-out functionality
@@ -683,6 +725,7 @@ Interactive API documentation with:
 ## 🐛 Troubleshooting
 
 ### **Cannot connect to MySQL**
+
 ```bash
 # Check MySQL is running
 sudo systemctl status mysql
@@ -696,11 +739,13 @@ FLUSH PRIVILEGES;
 ```
 
 ### **JWT Token expired**
+
 - Tokens expire after 1 hour
 - Frontend should implement token refresh
 - User needs to login again
 
 ### **Image upload fails**
+
 - Check `uploads/` directory exists and is writable
 - Check file size < 5MB
 - Check file format (JPEG, PNG, WebP only)
@@ -710,6 +755,7 @@ FLUSH PRIVILEGES;
 ## 📞 Support
 
 For issues or questions:
+
 - Email: dev@trustyou-go.com
 - Documentation: `/docs`
 - API Docs: `http://localhost:3000/api-docs`

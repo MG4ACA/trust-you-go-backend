@@ -12,10 +12,12 @@ const app = express();
 app.use(helmet());
 
 // CORS configuration
-app.use(cors({
-  origin: config.cors.origins,
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: config.cors.origins,
+    credentials: true,
+  })
+);
 
 // Body parsing middleware
 app.use(express.json());
@@ -37,7 +39,7 @@ app.get('/health', (req, res) => {
     success: true,
     message: 'Server is running',
     timestamp: new Date().toISOString(),
-    environment: config.server.env
+    environment: config.server.env,
   });
 });
 
@@ -50,7 +52,7 @@ app.get('/health', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    message: 'Route not found'
+    message: 'Route not found',
   });
 });
 

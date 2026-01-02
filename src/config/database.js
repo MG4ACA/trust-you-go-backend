@@ -11,7 +11,7 @@ const poolConfig = {
   connectionLimit: 10,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 0
+  keepAliveInitialDelay: 0,
 };
 
 // Create connection pool
@@ -44,7 +44,7 @@ const query = async (sql, params) => {
 // Execute multiple queries in a transaction
 const transaction = async (callback) => {
   const connection = await pool.getConnection();
-  
+
   try {
     await connection.beginTransaction();
     const result = await callback(connection);
@@ -73,5 +73,5 @@ module.exports = {
   query,
   transaction,
   testConnection,
-  closePool
+  closePool,
 };

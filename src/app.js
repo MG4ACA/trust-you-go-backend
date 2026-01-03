@@ -43,10 +43,9 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API Routes will be added here
-// app.use(`${config.server.apiPrefix}/auth`, require('./routes/auth.routes'));
-// app.use(`${config.server.apiPrefix}/admin`, require('./routes/admin.routes'));
-// ... more routes
+// API Routes
+const routes = require('./routes');
+app.use(config.server.apiPrefix, routes);
 
 // 404 handler
 app.use((req, res) => {

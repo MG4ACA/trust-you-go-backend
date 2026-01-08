@@ -40,12 +40,15 @@ module.exports = {
 
   // CORS Configuration
   cors: {
-    origins: (process.env.ALLOWED_ORIGINS || 'http://localhost:5173').split(','),
+    origins: (
+      process.env.ALLOWED_ORIGINS ||
+      'http://localhost:5173,https://trustyou-go.com,https://app.trustyou-go.com'
+    ).split(','),
   },
 
   // Frontend URL
   frontend: {
-    url: process.env.FRONTEND_URL || 'http://localhost:5173',
+    url: process.env.FRONTEND_URL || 'https://trustyou-go.com',
   },
 
   // Swagger Configuration

@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const path = require('path');
 const config = require('./config');
 const errorHandler = require('./middleware/errorHandler');
+const setupSwagger = require('./swagger/swagger');
 
 const app = express();
 
@@ -42,6 +43,9 @@ app.get('/health', (req, res) => {
     environment: config.server.env,
   });
 });
+
+// Swagger API Documentation
+setupSwagger(app);
 
 // API Routes
 const routes = require('./routes');
